@@ -1,0 +1,69 @@
+REACT ¿ QUE ES ? (TEORIA MUY RESUMIDA)
+    Libreria de JS para construir interfaces de usuario. (los interfazes son los metodos que tiene le usuario para interactuar con el sistema)
+
+    - Basado en componentes ( conjuto de elementos con una funcion especifica )
+
+    - React Tiene un sistema de desarrollo declarativo ( es decir importa el funcionamiento, mas que el paso a paso del desarrollo)
+
+    - Su eficacia en rendimiento se debe a la nueva tecnologia que aplica llamada "VIRTUAL DOM"
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REPASO CONCEPTOS DE JAVASCRIPT
+
+
+EXPRESIONES: Combinacion de valores, variables y operadores que son evaluados para producir un resultado
+
+
+FUNCIONES: Bloques de codigo, que tienen una finalidad clara, una tarea especifica, y que pueden ser reutilizadas las veces que se quiera
+    2 GRUPOS:
+
+        *Funcion DECLARADA: Funciones tradicionales, se debe invocar para que la funcion se ejecute (solo las funciones declaradas pueden ser invocadas antes de su declaracion y se ejecutan igualemnte esto se llama: "HOISTING")
+                    - function nombreDeLaFuncion ( argumentos ) {
+                        //Cuerpo de la funcion
+                    }
+
+                    nombreDeLaFuncion( argumentos )
+
+
+        *Funcion EXPRESADA: Se asignan a una variable, pueden ser ANONIMAS O FLECHAS, no se pueden invocar antes de declararse
+
+            ANONIMA:
+                - const sumarNum = function( argumentos ){
+                }
+
+            FLECHA: 
+                -const sumarNumFlecha = (argumento) => {
+                }
+
+
+
+CLASES: Crear objetos de programacion, y simplificar a travez de metodos el funcionamiento de un sistema, encapsularlo, mejorar la sintaxis, herencia, evitar repeticion etc
+    -Características de las clases 
+        -Tienen diferentes características que las forman, llamadas miembros, que normalmente son de dos tipos: propiedades y métodos
+        -Las propiedades son variables dentro de las clases, mientras que los métodos son funciones dentro de las clases
+        -Las clases tienen un constructor, que es un método especial que se ejecuta automáticamente cuando se crea una instancia
+
+
+                class Producto {
+                    constructor(name, price){
+                        this.name: name,
+                        this.price: price
+                    }
+                }
+
+
+                const fideo = new Producto("fideos", 100)
+                const harina = new Productos("Harina", 200)
+
+                let arrayProductos = [fideo, harina]
+
+
+FOS: Funciones de orden superior, pueden recibir como parametros otras fucniones mas pequeñas, o retornar funciones como resultado
+    ej filter, map etc
+
+            //este rerorna la primer coincidencia, pero por ejemplo con un filter, devuelve un array con todos los coincidentes, en caso de q haya mas
+            let buscado =  arrayProductos.find(prod => prod.name === "harina" )
+
+

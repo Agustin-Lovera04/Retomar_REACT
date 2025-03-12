@@ -1,0 +1,220 @@
+REPASO DE SINCRONISMO Y ASINCTRONISMO
+    
+    Programacion SINCTRONICA:
+        Enfoque o estilo de programacion en el que las tareas se ejecutan secuencialmente en el orden en el que se escribieron.
+        Se ejecuta linea por linea.
+        Cada tarea se ejecuta y bloquea el incio de la siguiente, hasta que no se finalize por completo
+
+            function a(){} // incia y termina
+            function b(){} // inicia cuando termina "a"
+            function c(){}  // inicia cuando termina "b"
+        
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    Programacion ASINCRONICA:
+        las tareas se ejecutan en 2do plano, por lo que cada tarea es independiente y no es bloqueante de las siguientes ordenes.
+
+            Ej:         //para simular una tarea que lleve mas tiempo, usamos "setTimeOut"
+
+
+                setTimeOut(() => {
+                    console.log("primer Tarea")
+                }, 2000)
+
+                console.log('Esto se aplica igual por mas de que no hayan pasado los 2 segundos de la orden anterior');
+                
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+QUE ES UNA F. CALLBACK?
+    Funcion que pasamos como argumento a otra funcion  ( Funcion de orden superior: es la que recibe funciones como argumentos ( seria el contenedor de la callback))
+
+
+        EJ:
+            function suma ( num1 , num2 , callback){
+                let resultado = num1 + num2
+
+                callback(resultado)
+            }
+
+
+            funciton mostrarResultado(dato){
+                console.log('El resultado fue: ' + dato);
+            }
+
+
+            suma(1, 3 , mostrarResultado)
+    
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    METODO MAP
+
+        El metodo  map como lo conocemos hoy es asi:
+
+            const numerosDuplicados = numero.map(numero => numero * 2 )
+
+    
+    ....Peeeeroo, como fnciona realmente?  ===> 
+
+            function mapDesglosado( array , callback ){
+                
+                let arrayNuevo = []
+
+                for(let i = 0; i < array.length; i++){
+
+                    arrayNuevo.push(callback(array[i]))
+                
+                }
+
+                return arrayNuevo
+            }
+
+
+            function duplicar(numerito){
+                return numerito * 2
+            }
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+PROMESAS:
+    Son objetos que representan un hecho eventual a futuro. Las vamos a utilizar en operaciones asinctronicas que pueden resultar exitosas o fallidas.
+
+        Las promesas tienen 3 ESTADOS:
+
+            Pendiente: (pending) Estado incial de la promesa. la operacion no se completo ni se rechazo
+
+            Exitosa: (fullfilled) La operacion se completo con exito, se resolvio la promesa
+
+            Fallida: (rejected) La operacion fallo y se rechazo la promesa.
+
+
+            
+
+    1- Crear la promesa: Debemos instanciar la clase promise y pasarle como argumento la function callback, esta funcion tiene dos parametros(resolve y reject) // son funciones que nos provee la promesa para indicar el estado de la misma
+         
+
+
+        const promesa  = new Promise ({resolve, reject} => {
+            
+            //Si quiero q sea exitosa la promesa
+            resolve("operacion exitosa")
+
+
+            //Si quiero que sea fallida
+            //reject('fallo operacion')
+        })
+
+        console.log(promesa);
+        
+
+
+    2. MANEJO DE CASOS EXITOSO O FALLIDO (THEN Y CATCH)
+
+        //THEN: se ejecuta ante el exito de la promesa
+        //CATCH: se ejecuta para capturar el rechazo de la promesa.
+        //FINALLY: (opcional), se ejecuta Siempre
+
+    
+    promesa
+        .then(() => console.log(' Se ejecuta este clg en caso de la promesa sea exitosa'))
+        .catch(() => console.log(' Caputura el error, promesa fallida '))
+        .finally(() => console.log(' Me ejecuto siempre, apenas se resuelva la promesa '))
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+MAPEANDO ARTICULOS
+
+    cosnt products = [
+
+        {id: 1, nombre: "producto 1 "},
+        {id: 2, nombre: "producto 2" },
+        {id: 3, nombre: "producto 3" }
+    ]
+
+
+    return (
+        
+        <div>
+            Productos
+
+            <ul>
+            
+                {  productos.map(prod => {
+                    <li key={prod.id}>  {prod.nomnbre} </li>
+                })  }
+            
+            </ul>
+        </div>
+
+    )
+
+
+    !!!! el KEY en la etiqueta "li" , lo usamos ya que al momento de mapear los prductos react nos pide que le demos un identificador a cada elemento que se itera del array, con el map
+
+    Debe ser un dato unico por elemento, por eso usamos normalmente el Id
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CONSUMIENTO DATOS DESDE UNA aplica
+
+    const Usuarios  = () => {
+        const [usuarios, setUsuarios ]  = useState([])
+
+
+        useEffect(() => {
+            fetch ('urlApi')
+                .then(respuesta => response.json())   // Esto lo hacemos para que los datos que me llegan queden utilizables
+                .then(data => setUsuarios(data))        // Seteamos los datos que llegaron al estado de usuarios 
+                .catch( error => console.log(error))
+        }, [])
+    
+    
+        return(
+
+            <div>
+            
+                <ul>
+
+                    {usuarios.map (user  => {
+                        <li key={user.id}> {user.nombre}   -  {user.edad}  </li>
+                    })}
+
+                </ul>
+
+            </div>
+        )
+    
+    }
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ASYNC Y AWAIT 
+
+    SOn dos palabras reservadas que nos permiten trabajr con promesas de manera mas sencillas
+
+    AWAIT: genero una pausa en la ejecucion del codigo hasta que la promesa se resuevla
+
+    ASYNC: Indica a el script, cual es una funcion asincronica, para tratarse como tal
+
+
+
+        EJ:
+            cosnt getUers = async () => {
+                const respuesta = await fetch("urlApi")
+                const data =  await respuesta.json()
+                setUsuarios(data)
+            }

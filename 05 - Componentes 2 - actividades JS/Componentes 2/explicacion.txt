@@ -1,0 +1,97 @@
+CHILDREN
+
+    Manera de proyectar /  transcluir uno o mas componentes dentro de otro.
+
+    Ideal para:
+        ·Necesitamos que un elemento quede dentro de otro sin que sepan el uno del otro
+        ·Necesitamos implementar patrones mas complejos
+
+    
+    Se usa asi:
+
+    -Se invoca el componente con la estructura de apertura y cierre tradicional de html
+    -Se coloca el contenido que queremos pasar por children, entre medio de la apertura y el cierre
+
+            <Componente prop="esto es una prop"> 
+                <p> ESTO ES UN CHILDREN </p>
+            </Componente>
+
+
+            ..
+            Componente.jsx
+                ........({children})
+
+                    {children}
+
+
+    - COmo veran el children llega como prop bajo el nombre de "children"
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CICLOS DE VIDA
+    los ciclos de vida de los componentes, no son mas que estados por los que pasa el mismo:
+
+        1- El montaje: se produce una sola vez con el componente se genera, incluyendose en el DOM
+        2- La actualizacion: Cunado el compoenbnte ya generado se actualiza
+        3- Se desmonta del DOM, termina la vida del componentne
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    RENDER Y EFECTOS
+        El funcionamiento de react esta estrechamente ligado al cambio de estados.
+        Cuando se p´roduce un cambio de estado react ejecutaa un nuevo proceso de renderizado para ese componente y recursivamente para todos sus hijos.
+        Con lo cual cambia tood el arbol de elementos de la interfaz del usuario
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Hay hooks que permiten manipular los efectos secundarios de los cambios de estado, es decir de alguna manera estariamos trabajando tambien sobre los ciclos de vida de los mimsos componentes
+
+
+USE EFFECT
+    Hook que nos permite controlar efectos secundarios de los cambios de estados.
+    Utilizado normalmente para sincronizar componnetes con sistemas externos
+    Funcion q recibe dos parametros 
+    
+        1-Funcion callback
+        2-Array de dependencias
+
+    
+    useEffect(() => {
+
+        //logica que querriamos que ocurra ante un cambo de estado
+    
+    
+    }, [ EstadoAEscuchar ])
+
+    //En el array de dependencias el, ponemos los estados que queremos esccuchar para ejecutar la logica de la funcion de callback
+
+                        EJ:
+                            const [count, setCount] = useState(1)
+
+                            useEffect(() => {
+
+                                document.title = `Titulo modificado a  count: ${count} `
+
+                            }, [count])
+
+                    //Cada vez que cambie el contador, cambiaria el titulo del documento
+
+
+        
+    !!!!!!ATENCION , si el ARRAY DE DEPENDENCIAS se deja vacio el useEffect se ejecuta solo una vez AL GENERARSE EL COMPONENTE
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+USE REF
+
+    Crear una referencia mutable, retorna un objeto y una propiedad current, la cual apuntara a aun valor y lo podemos mutar.
+    Esta referencia puede ser actualizada sin tener que realizar una nueva renderizacion del compoenente
+
+    Se usa a menudo para acceder al DOM y modificarlo directamente
+

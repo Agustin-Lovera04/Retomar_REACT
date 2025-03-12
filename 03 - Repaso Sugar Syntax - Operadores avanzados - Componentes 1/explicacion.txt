@@ -1,0 +1,169 @@
+El SUGAR SYNTAX 
+    es la utilizacion de operadores avanzados con la idea de simplificar el codigo
+
+    1-Plantillas literales: Se usan con backsticks, Usadas para simplificar la concatenacion de datos
+
+    2-Operador ternario: Condicional, simplifica el trabajo de if/else, en una sola linea
+
+        condicion ? codigo si la condicion se cumple : codigo si es falso
+
+                ej: let condicion = true
+
+                    condicion ? "condicion esta en true" : "me muestro si condicion es false"
+                
+    3-Operador Spread: es un operador de propagacion, se utiliza en objetos iterables ( arrays, onjetos etc) 
+        Los despliega y los devuelve como parametros individuales a otro contexto.
+
+            ej: let array = ["Juan" , " Agustin " ]
+
+                console.log(array)  ==> ["Juan" , "Agustin"]
+
+            PERO SI USO SPREAD:  console.log(...array)  ===> "Juan", "Agustin"
+
+
+        FUNCION 2 DEL SPREAD: COPIAR OBJETOS EN DISTINTA MEMORIA:
+
+
+                    let alumno = {
+                        nombre: "JUAN",
+                        edad: 27
+                    }
+
+                    let alumno2 = alumno
+
+                    // SI YO HAGO ESTO, la Variable "alumno 2" va a apuntar al mismo espacio en memoria que "alumno", por lo tanto cualquier cambio que yo haga en alumno se replicara en alumno 2 
+
+                                ej: alumno.nombre: "PAOLA"
+
+                                console.log(alumno2) ===> "Paola ..."   //Aca tambien cambia el nombre ya que apuntan a la misma memoria
+
+                    
+                    //SOLUCION; CON EL OPERADOR SPREAD, que podes copiar un objeto pero independientes entre si, con su espacio en memaoria individual, como? 
+
+                            let alumno3 = {...alumno}
+
+
+    4-DESESTRUCTURACION
+        Expresion de JS que me permite desempaquetar valores de array u objetos en distintas varaibles
+
+            Ej:
+                let bart = {
+                    nombre: "Bart",
+                    apellido: "Simpson"
+                }
+
+            let nombreBart = bart.nombre
+            .log ...
+            let apellidoBart = bart.apellido
+            .log ...
+
+
+                //PERO USADNO DESESCTRUCTURACION SE RESUME A ESTO:
+                    let {nombre, apellido} = bart
+                    console.log(nombre, apellido)
+
+
+    
+    5- ACCESO CONDICIONAL A OBJETOS
+        Sirve para cubrirse ante datos null o undefined, que no reviente la app
+
+        let varaible = null
+        console.log(  variable ?.nombre   )
+
+
+    
+    6- OPERADORES && o ||
+
+        //OPERADOR &&, si se cumple la condicion se ejecuta el codigo luego del operador
+
+            let hambre = true
+
+            hambre && console.log("EXISTE ENTONCES SE MUESTRA")
+
+
+        // OPERADOR || 
+
+            let sueño = false 
+
+                sueño || console.log(" ALREVEZ DEL &&, esto se muestra si la condicion es false")
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+COMPONENTES DE REACT
+
+        Anteriormente ya explicamos lo que era un componente de react, pero casi tan importnate como ellos, son sus ESTADOS
+
+    ESTADOS DE REACT
+        Los estados de un componente se utilizan para respresentar la informacion que puede cambiar durante la vida util del comoponente y afectar si representacion en el DOM
+
+
+        Todo cambio de estado va a inizializar el proceso de render a partir del nodo donde se pordujo el cambio de esatado y asi se genera un nuevo VirtualDOM
+
+        ESTADO == HOOKS
+
+----------------------------------------------------------------------------------------------------------------------
+
+        HOOKS
+            FUnciones que se pueden usar dentro de los componentes funcionales para agregar funcionalidad adicional de react ej useState, useEffect etc
+
+            .Todos los hooks comienzan con el prefijo "use"
+
+            .Siempre deben estar declarados a primer nivel de codigo ( nunca dentro de condicionales etc )
+
+            .
+
+            USEESTATE hook de react que permite crear un estado, 
+                - Se debe importar
+                -Retorana un array
+                -estructura:
+                    const [ state, setState ] = useState([])
+
+                            //valor del estado,  // funcion que actualiza el estado
+
+
+    //CREAMOS EL ESTADO CONTADOR, PARA ACTUALIZAR EL VALOR DE LA CANTIDAD CADA VEZ QUE SE USEN LOS BOTONES
+        EJ "contador" 
+            const Contador = () => {
+
+                const [contador, setContador]  = useState(1)
+
+
+                cosnt decrementar = () => {
+                    if(contador > 1){
+                        setContador(contador - 1)
+                    }
+                }
+
+                cosnt incrementar = () => {
+                    if(contador < stock){
+                        setContador(contador + 1)
+                    }
+                }
+
+                return(
+                    <div>
+                        <button onClick={decrementar}> - </button>
+                            <p>  {contador} </p>
+                        <button onClick={incrementar}> + </button>
+                    </div>
+                )
+            }
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+COMPONENTES DE PRESENTACION
+    Son aquellos que simplemente se limitan a mostrar datos y que tienen poca o nula logia asociada a manipulacion del estado etc.
+
+        .Orientados a l aspecto visual
+        .No tienen dependencia con fuente de datos.
+        .Normalmente no tienen estado
+
+
+COMPONENTENTES CONTENDEDORES
+    Tineen como proposito encapsular a otros componentes y proporciarles los datos y propuiedades que necesitan
+
+    Manipulan estados y resulven mchas cosas dentro suyo para luego distruibir a los componentes corrspondidos

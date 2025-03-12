@@ -1,0 +1,10 @@
+                -Crear una carpeta dentro de stc llamada components que contenga la implementacion del componente NAVBAR, dentro de navbar, su funcionalidad es renderizar una barra de menu
+
+                -Navbar:
+                    -BRAND del atienda
+  ------OK                  -Listado de categorias clickleables
+                    -Incorpora bootstrap
+                
+                -Crear un componente dentro de NavBar "CartWidget" y simular con un numero hardocdeado un contador de carrito.
+
+                -Crear un componente itemListContainer con una prop greeting, u muestra el mensaje dentro del contenedor

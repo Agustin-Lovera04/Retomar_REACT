@@ -1,0 +1,81 @@
+Tenemos dos Alternativas a la hora de elegir Frameworks que combinan React y Bootstrap.
+
+REACTSTRAP  y REACT BOOTRSTAP
+
+Reacstrap
+    Es muhco mas rapido y los componentes estan casi listos automaticamente, para insertar en nuestro proyecto
+
+React Bootstrap
+    Es mas manual, debemos meter mas mano, pero tambien tiene como ventaja que los componentes son mucho mas manipulables y manejables
+
+
+
+
+REACT BOOTRSTAP
+
+    -Instalar
+        npm install react-bootstrap bootstrap
+
+
+    -Importar css en index.jsx
+        import 'bootstrap/dist/css/bootstrap.min.css';
+
+    
+    Luego es cuestion de comenzar a estilar directamente los componentes que vayamnos importando.
+
+    !!!!!IMPORTANTE  ( para obtener la mayor performance, es importnate en cada importacion solo trarer el modulo que necesitamos, y no todo el contendio disonible de bootrsap)
+
+        EJ 
+            import {Table} from 'react-bootstrap'   ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+                se hace asi:
+            
+            import Table from 'react-bootrsap/Table'  De esta manera solo traemos la carpeta Table
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+UN poco de teoria de BOOTSTRAP
+
+    Bootraps en su originalidad funciona con un sistema grid de columnas y filas
+
+        Divide la pantalla en 12 columnas, y una cantidad ilimitadas de filas
+        
+        ----- 4 ----- || ----- 4 ----- || ------- 4 -------
+        -------------- 6 ----------|| --- 3 ---|| --- 3 ---
+
+        
+    Como trabajar con buenas Practicas:
+
+    -container
+        -row
+            -cols
+
+
+        <div class=" container " > 
+        
+            <div class= " row " >
+            
+                <div class = " col "> </div>
+
+                <div class = " col "> </div>
+ 
+            </div>
+
+        </div>
+
+
+
+
+!Para manipular la cantidad de cols que ocupa un elemento, y a partir de que medida, lo hacemos asi
+
+    ...
+    ...
+        <div class= " col-md-6 ">   elemento que a partir de el breakpoint "md" ocupara 6 cols   </div>
+        <div class= " col-md-6 ">   elemento que a partir de el breakpoint "md" ocupara 6 cols   </div>
+
+//En este caso por ejemplo a partir de la medida "md" los elementos estaran en la misma fila uno al lado del otro ya que ocupan 6 cols c/u
+

@@ -1,0 +1,137 @@
+VIRTUAL DOM
+    Copia del DOM original y luego cuando ocurren cambios, compara el DOM original con el virtual y solo renderiza y gasta recursos en modificar solo la porcion del virtual DOM que fue modificada.
+
+    LLega como alternativa para mejorar el rendimiento de las app web y poder renderizar mas rapido y mas barato las aplicaciones
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NODE
+    Node.js es un entorno de ejecución de JavaScript que se utiliza para crear aplicaciones web desde el servidor. Es multiplataforma, de código abierto y gratuito. 
+    Características
+    Permite ejecutar JavaScript en servidores sin necesidad de un navegador web 
+    Es escalable y puede manejar un gran número de conexiones simultáneas 
+    Es ideal para aplicaciones que procesan grandes volúmenes de datos 
+    Está basado en el motor V8 de Google, que compila el código JavaScript en código de máquina 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NPM
+    Npm, o Node Package Manager, es un gestor de paquetes que permite instalar, actualizar, y administrar librerías y módulos para proyectos Node.js. Es una herramienta fundamental para el desarrollo con JavaScript. 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CLI
+    La interfaz de linea de comandos , es un metodo que permite a los desarrolladores, a dar instrucciones
+    (Consola)
+
+    React tiene su propia CLI, y admite la creacion de una app ( create-react-app ) ESTO ESTA DEPRECADO
+
+        ALTERNATIVA === VITE  (nos mnejoro auun mas el rendimiento de react y ademas mejora el manejo de dependencias)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VITE
+    npm create vite@latest
+
+    Seguimos intrucciones -REACT  y luego -JAVASCRIPT
+
+    y luego dentro del proyeto instalamos las dependencias
+
+        npm i 
+
+        npm run dev (para levantar el proyecto de manera local)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Empezamos a jugar con REACT y con una extension llamada "es7 ...."
+
+QUE NOS DA SNIPPETS PARA REACT
+
+
+    Ej: 
+        Snippet componente   "rafce"
+
+    
+
+COMPONENTES EN REACT
+    Son las "porciones " del virtual dom. que pueden renderizarse particularmente, gracias al funcionamiento de react.
+
+    Tienen el formato .jsx ( combinacion de js con html)
+
+    ESTRUCTURA:
+        import React from 'react'
+
+        const Componente = () => {
+            
+            //ACA VA TODA LA LOGICA DE js
+
+            return(
+                <div>
+                    <h1> HOLA </h1>
+                </div>
+            )
+        }
+
+
+
+!!!!ATENCION, como sabemos a medida que vayamos creando el arbol de componentes, no seria una buena practica agregar muchos divs, caundo no son requeridos.
+
+Por eso en react se crearonb los "REACT FRAGMENTS"
+
+    ...
+    return(
+        <>
+            //Contenido
+        </>
+    )
+
+
+Estos mismos fragmentos no se trasladan realmente al virtual DOM, evitando asi la generacion de divs, inecesarios
+
+
+
+
+USO DE VARIABLES O DATOS EN html
+
+    -let name = "juan"
+
+    ....
+    ...
+        //se envuelva en llaves
+    <h1> { name } </h1>
+
+ARBOL DE COMPONENTES    
+    
+    -Creamos la carpeta "components"
+
+        -Adentro creamos los componentes.jsx (Siempre en PascalCase)
+
+
+    ej:
+        components
+            ProductCard
+                ProductCard.jsx
+                    //Contenido
+        
+        //En componente padre lo llamamos asi
+
+        ...
+        <ProductCard />
+
+
+
+//Para transmitir informacion, como variables, datos etc entre componentes, tenemos las llamadas "PROPS"
+
+    <ProductCard prop={ dato } /> 
+
+
+    En productCard:
+
+            const ProductCard = ( prop ) => {
+                .....
+                <h1> {prop} </h1>
+            }
