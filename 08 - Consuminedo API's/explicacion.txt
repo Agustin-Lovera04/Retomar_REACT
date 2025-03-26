@@ -1,0 +1,130 @@
+Para entender de que manera podemos consumir datos debemos entender de que manera se conecta cliente con el servidor
+
+-------------------------------------------------------------------------------------------------------------------
+¿QUE ES UN SERVIDOR?
+    Es un sofware o hardware que administra recursos web. Estos recursos pueden ser img, vdeos, paginas, acceoss a BD etc.
+
+
+ · MODELO CLIENTE SERVIDOR
+    Cliente ( consumidor )
+    Servidor ( proveedor )
+        Este modelo indica que los consumidores se IDENTIFICAN ENTRE ELLOS y acuerdan una MANERA DE TRANSFERIR la info.
+        
+        FASES:
+            · el cliente solicita info
+            · El servidor envcia la respuesta
+            · Fin de la operacion
+
+
+         El protocolo que usan para su comunicacion se llama HTTP
+
+-------------------------------------------------------------------------------------------------------------------
+
+REQUESTES VIA HHTP/s
+
+    Nos ayudan a realizar soolicitudes al servidor
+
+        · Direccion / URL
+        · Verbo ( CRUD )
+        · Parametros via query o url params
+        · Headers
+        · Body
+
+    
+
+EJ: 
+    const consumirAPI = ( ) => {
+        const [pelis, setPelis] = useState([])
+        const [busqueda, setBusqueda] = ()
+
+    useEffect( async ()  => {
+
+        fetch('url Servidor ')
+
+        let data  = await response.json()
+
+        setPeliculas(data)
+    }, [busqueda])
+
+
+
+//Manejamos envio de form
+        const handleForm = ( event ) => {
+            
+            event.preventDefault()          //evitamos recarga
+
+            setBusqueda(event.target.busqueda.value)        //tomamos el valor ingresado en el input al momento de envio del evento
+
+            event.target.busqueda.value = "";
+        }
+
+        return(
+            <>
+                <form onSubmit = {hamdleForm}>
+                    <input type="text" name="busqueda"></input>
+                    <button type="submit" > BUSCAR </button>
+                </form>
+
+
+                {pelis === undefined ? <h1> No se encontraron peliculas </h1> 
+                
+                :
+
+                <ul>
+                  {pelis.map (peli => <li key={peli.id } > {peli.title} </li> )}
+                </ul>
+                }
+            </>
+        )
+    }
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ EJ ENVIO DE MAILS SIN BACKEND
+
+    Existe una libreria llamada emailjs-com
+
+        npm i emailjs-com
+
+        import emailjs from ....
+
+
+        1°Creamos un formulario
+
+            <form onSubmit =(envioEmial)>
+                <label> Nombre: </label>
+                <input type="text" onSubmit = {(e) => setNombre(e.target.value) value = {nombre}} />
+
+                <label> Email: </label>
+                <input type="text"  onSubmit = {(e) => setEmail(e.target.value) value = {emial}} / />
+             
+                <label> Mensaje: </label>
+                <input type="text"  onSubmit = {(e) => setMensaje(e.target.value) value = {mensajae}} //>
+
+
+                <button type="submit" > ENVIAR CORREO </button>
+            </form>
+
+    
+        2° cremaos funciones manejadoras de lfomr
+
+            const envioEmial = (event) => {
+                event.preventDefault()
+
+                let templateParams = {
+                    from_name: nombre,
+                    from_email: rmial
+                    message: mensaje
+                }
+
+
+                emailjs.send( 'service Id' , ' template ID' , templateParams ,  'key publica de user ')
+
+                recibir las rta  y actuar
+            }
+
+
+    3° Debemos poner una nueva app, luego avisar que recurso de gmail usaremos, obbetener el template id, y las keys publicas y privadas

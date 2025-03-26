@@ -1,0 +1,110 @@
+HOOKS
+    El hook como vimos anteriormente son funciones especiales:
+
+    REPASANDO REGLAS GRALES:
+        · LLamados unicamente en el nivel superior del componente funcional.
+        · NO deben ser llamados desde funciones regulares.
+        · Siempre recordar que para que reeact reconozca un componente debemos usar PascalCase
+
+-------------------------------------------------------------------------------------------------------------------
+
+CUSTOM HOOKS
+    Funciones especiales que nosotros mismos creamos, incluso los customs hooks tambien pueden utilizar los hooks nativos de react
+
+       1- React verifica el nombre de la funcion usando el prefijo "use"
+       2- Desarrollar la logica de funcionalidad que necesitemos
+
+
+                EJ:
+                    export const useContador = (valorIncial, valorFinal) => {
+                        
+                        const [contador, setContador] = useState(valorIncial)
+
+                        const inc = () => {
+                            if(contador < valorMAX){
+                                setContador(contador ++)
+                            }
+                        }
+
+
+                        const dec = () => {}
+                            if(contador > valorIncial){
+                                setContador(contador - 1)
+                            }
+
+                        return {contador, inc, dec}
+
+                    }
+
+                
+        3- Usar nuestro Custom Hook en algun componente
+
+            const UtilizamosCustomHook = () => {
+
+                const { contador, inc, dec } = useContador( 1 , 10 )  //usamos el hook y le enviamos los datos
+
+
+
+                <button onClick={inc}> RESTAR </button>
+                
+                    <strong>  {contador}  </strong>
+
+                <button onClick={dec}> SUMAR  </button>
+
+            }
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+PATRONES DE DISEÑO
+    hay formas de crear componentes que nos ayudan a reutilziar y mantener codigo
+
+    Dos de ellas son HOC ( high order Compoenntes) Y Render Props, ambas son tecnicas avanzadas
+
+
+    HOC
+        Patron que permite reutilizar una funcionalidad como comun
+
+            UN componente que recibe otro componente por argumento y asi combinando funcionalidades, devuelve una funcionalidad mayor.
+
+        Ej una validacion a un formulario.
+
+    
+
+        EJ:
+            const Mensaje = () => {                 //CREO UNA FUNCIONALIDAD
+                return(
+                    <>
+                        <p> 
+                            Lorem
+                        </p>
+                    </>
+                )
+            }
+
+
+            const Hoc = (Mensaje) => {              //CREO EL HOC, que retorna un nuevo componente, combinando el                                   componente que llega
+
+                return function(){
+
+                    return(
+                        <>
+                            <h1> AGREGO UN TITULO  </h1>
+
+                            <Mensaje />
+                        </>
+                    )
+                }
+            }
+
+
+
+            ....
+
+                const nuevoComponente = Hoc(Mensaje)     //Creamos una variable que contenga el componente del hoc
+            .....
+            .....
+
+                <nuevoComponente />         //usamos esa nueva variable

@@ -148,9 +148,9 @@ MAPEANDO ARTICULOS
 
             <ul>
             
-                {  productos.map(prod => {
+                {  productos.map(prod => (
                     <li key={prod.id}>  {prod.nomnbre} </li>
-                })  }
+    ))  }
             
             </ul>
         </div>
@@ -187,9 +187,9 @@ CONSUMIENTO DATOS DESDE UNA aplica
             
                 <ul>
 
-                    {usuarios.map (user  => {
+                    {usuarios.map (user  => (
                         <li key={user.id}> {user.nombre}   -  {user.edad}  </li>
-                    })}
+        ))}
 
                 </ul>
 

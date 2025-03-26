@@ -1,0 +1,64 @@
+REACT ROUTER
+    Libreria de enrutamiento que nos permite navegar entre componentes sin tener que recargar la app
+    Justamente React nos sirve para ser eficazes e npaginas (SPA)
+
+    - npm i react-router-dom
+    
+    -EN nuestra app, vamos a usar algunos componenntes/funcionalidades de la Libreria
+
+                import {BrowserRouter, Route, Routes}
+
+                ...
+                ...
+                    <BrowserRouter>
+                        <Menu/>     //ejemplo de componente que este siempre ej NAVBAR
+                        <Routes>
+                            <Route path='/categoria1' element={ {<componenteCategoria/>} } />
+                            <Route path='/contacto' element={ <contacto/> } />
+                            <Route path='/' element={ <Home/> } />
+                            <Route path='*' element={ < 404 /> } />
+                        </Routes>
+
+                    <BrowserRouter/>
+    BrowserRouter: Componente que envuelve nuestra app y habilita la navegacion entre componentes
+    Routes: Define las rutas de navegacion
+    Route:  Define ruta en particular
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+    -Ahora, como navegamos?
+
+        usamos Link y NavLink      //LInk y NavLink, funcionan igual pero, NavLink, es recomendado para NAVBAR x estilos y eso ETC
+
+        .-..
+
+        <nav>
+            <NavLink to='/contacto'> Contacto </NavLink>
+        </nav>
+
+        ....
+        <Link to='/categoria1'>   Categoria 1   </Link>    // "to" ==== ir a :
+
+    
+-------------------------------------------------------------------------------------------------------------------
+
+
+PARAMETROS
+    Para navegar con parametros
+
+    Para capturar facilmente parametros de la url, usamos un Hook ("useParams")
+
+            import {useParams}
+
+
+        EJ CON ID
+
+            En app donde establecemos el routeo
+
+                '/producto/:id'             //configuramos el parametro dinamico con nombre id
+
+                let { id } = useParams()            //tomamos el parametro usandi el UseParams
+                console.log(id);
+                

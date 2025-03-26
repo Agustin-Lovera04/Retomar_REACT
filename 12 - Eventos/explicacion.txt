@@ -1,0 +1,126 @@
+EVENTOS 
+    Los eventos son cosas que pasan en el sistema que estás programando, el cual se encarga de avisarte para que tu código pueda hacer algo al respecto.
+
+    Por ejemplo, si el usuario hace clic en el botón de una página web, puede que quieras reaccionar a esa acción y mostrar una tarjeta con informació
+
+
+    Los mas conocidos "click" "submit" "Eventos de movimineto de mouse " etc
+
+
+        CLICK
+            <button onClick={ function ejecutada dp del click} > </button>
+
+
+        MOVIMINETO DEL MOUSE
+
+            <div   onMouseMove={  function ejecutada dp de pasar el mouse por arriba  }  >  </div>
+
+            <div   onMouseEnter={  function ejecutada dp de entrar con el mouse al div }  >  </div>
+
+            <div   onMouseLeave={  function ejecutada dp de sacar el mouse del div  }  >  </div>
+
+
+        EVENTOS DE INPUT
+            
+            <input    onChange={ manejadorInput // se dispara cuando el usuario cambia el value del input}>
+
+            <input    onKeyDown={ manejadorInput // se dispara cuando el usuario presiona una tecla}>
+
+            <input    onKeyUp={ manejadorInput // se dispara cuando el usuario suelta la tecla}>
+
+
+
+        EVENTOS DE FORMULARIO
+
+           <form onSubmit({  Funcion que se ejecuta al realizar el submit  })>
+
+            </form>
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+EVENTOS AUTOMATICOS
+    los eventos automáticos son aquellos que se programan para ejecutarse después de un tiempo determinado
+
+
+    ADD EVENT LISTENER
+
+        Patron d diseño que sirve, para escuchar cuando un algo ocurre en algun elemento, libreria o API y actuar en consecuencia.
+
+
+                EJ
+                    window.addEventLister('resize', () => {
+                        console.log('cambiaste el tamaño de la ventana');
+                    })
+
+    
+
+        REMOVIENDO EVENTOS (removeEventListener)
+            Cuando nosotrso asignamos eescuchadores, se guardan en memoria, y al acumularse podrian generar problemas. LEAKS EN MEMORIA O EVENTOS REGISTRADOS MAS DE UNA VEZ ,entonces debemos tmabien reconocer cuando es una buena oportunidad de removerlos.
+
+                · Se desregistran con el nombre y la ref a la funcion con la que los registramos.
+
+            Y eso se realiza generalemtne con el return del effect
+
+
+                EJ
+                useEffect(()=> {
+                    
+                    dunction click(){
+                        console.log('click')
+                    }
+                    
+                    window.addEventLister('resize', click );
+                    
+                    return() => {
+                        window.removeEventListener( 'click ' , click)
+                    }
+                    
+                    
+                    })
+
+
+
+
+        EVENTO AUTOMATICO
+
+            const Automatico = () => {
+                const [mostrarMensaje, setMostrarMensaje] = useState(false)
+
+
+                useEffect( ( ) => {
+                    let tiempoEspera = null
+
+                    const reinciarTemporizador = () => {
+                        clearTimeout(tiempoEspera)
+                        tiempoEspera = setTimeOut(()=>{
+                            setMostrarMensaje(true)
+                        },5000)
+                    }
+
+
+                    const manejarACTusuario = () => {
+                        reinciarTemporizador()
+                    }
+
+
+
+                    window.addEventLister("mousemove", manejarACTusuario)
+                    window.addEventLister("keyDown", manejarACTusuario)
+                    reinciarTemporizador()
+
+                    return() => {
+                        window.removeEventListener("mousemove", manejarACTusuario)
+                        window.removeEventListener("keyDown", manejarACTusuario)
+                        clearTimeout(tiempoEspera)
+                    }
+                })
+            }
+
+
+                retunr(
+
+                    {mostrarMensaje && <p> Seguir mirando tele? </p> <button onClick=(()=>{ setMostrarMensaje(false)})> </button> }
+
+                )

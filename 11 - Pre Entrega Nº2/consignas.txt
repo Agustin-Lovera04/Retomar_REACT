@@ -1,0 +1,17 @@
+                1º Configar en App un sistema de routeo.
+
+                        -Navbar con Cart
+                        -Catalogo
+                        -Detalle de producto
+
+------TERMINADOS                2ºRutas a configurar
+
+                    - /     navega a 'ItemListContainer'                -----ok
+                    - /category/:id     'ItemListContainer'             -----ok
+                    - /item/:id          'ItemDetailContainer'             -----ok
+
+
+                3º  Links a configurar
+                    - Clickear en el bran debe navegar a /      -----OK
+                    -Clickear en un item.js debe mavegar a /item/:id    -----OK
+                    -Clickear en una cateoria del navbar ==> /vategory/:categoryID  ----OK
