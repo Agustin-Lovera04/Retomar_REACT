@@ -1,0 +1,91 @@
+Consigna:
+    Desarrollar una app de un e-commerce para poder vender productos de rubroa eleccion
+
+    Componentes-        (No nos limitaremos para realizar compoenntes, utilizaremos los de la consigna, pero modulizaremos al maximo como tine que ser)
+        -Navbar
+        -ItemListContainer
+        -itemList
+        -ItemDetailContainer
+        -ItemDetail
+            .ItemAuqntitySlecetor
+            .Description
+            .AddItemButton
+        -CartContext
+        -CartWidget
+        -Checkout
+            .Brief( orden de compra)
+
+
+· Utilizar las variables de entorno en un .env con libreria DOTENV
+
+
+Consignas Detalladas:
+
+
+    · un usuario debee poder ingresar, navegar por los productos e ir a sus detalles.
+    · Desde el detalle se deve poder ver la descripcion foto y precio e ingresarlo al carrito
+    · Una vez que el carrito tenga al menos un producto se dbera visualizar un listado coptacto de la orden con el precio total
+    · Al ingreaar su nombre, apellido. telefono, e-mail ( dos veces para confirmar) debe activarse el boton de "realizar compra"
+    · Al clickear "realizar Compra" debe guardarse en la BD una orden que tenga todos los prods, lña fecha y dar feedback del numero de orden
+
+
+
+DESARROLLO:
+
+                INICIO
+                    Al momento de ingresar la ruta base "/"
+   ----OK                 ·Visualizar un set de prod disponibles
+                    ·Contar con algun acceso visivle a la vista de carrito en "/cart"
+                    ·Acceder a un menu desplegableque contendra las categorias, y debera poder navegarse entre categorias "/categories/:categoryID"
+
+    FLOW
+                ·al clickear un item debera navegar a "/item:id" dond el id, es el id del item(generado
+     ---OK             por firebase) Y ver la descripcion del prod( foto, precio, selector de cantidad)
+
+
+     ---OK   Si se ingresa a la ruta y el prod no existe e firebase, mostrar un cartel de aviso.
+
+    FIREBASE:   
+                Impementar al menos dos colecciones
+                    ·Items; 
+                        -Catalogo completo
+    ----OK                    -Link para fotom, puede estar en estatico en public ( /images/itemID)
+                        -PrecioUnitario
+                        -Descripcion (solo en detalle)
+                        -Categoria ( id a mano para version estatica o id de firebase para version dinamica)
+
+
+                    ·Orders:
+     ---OK                   Las ordenes generadas, que deben incluir los productos, descriciones y los precuios al momento de la compra
+                    
+                    
+
+        CART
+            Debe ser accesible en toda la xp y tener una indicacion de ña cantidad deitems incluidos 
+---OK
+            Recordar validar Stock
+
+
+    CHECKOUT
+                ·items con sus cantidades
+     --OK           ·Total de la orden
+                ·Input para nombre, apellido y telegono
+                ·iput doble para email
+
+        ·Finalizar la orden y enviar un order id, con el id del objeto de firebase.
+
+
+
+!: La navegabilidad debe hacerse con router.
+!: Cada libreria que utilizmos debemos declararla en la documentacion. ( que estar en el root del proyect)
+
+
+    
+CASI TERMINAMOS TODO, DENTRO DE TODO AL FINAL SALIO MAS O MENOS BIEN
+
+-Logia de stock, order, toda la logica de compra realizada.
+
+-Faltan: 
+    -Documentacion
+
+    -Estilos

@@ -1,0 +1,320 @@
+Firebase
+    Servicio provisto por Google para satifascer las distintas necesidades que puede tener una app y su ciclo de desarrollo, dentro de los cuales encontramos:
+
+        Seguridad y autenticacion
+        Almacenamineto y consulta
+        Hostin
+        monitoreo
+        Funcitons y mas
+
+
+    
+
+    PASOS PARA CREAR UN PROYECTO DE FIREBASE
+
+        1º Crear un nuevo proyecto.
+
+        2ºHacemos toda la configuracion ( es intuitiva )
+
+        3º Crear carpeta services
+
+        4º Dentro crear config.js
+
+        5º npm i firebase   // para instalar las herraminetas de firebase
+
+        6º Agregamos el SDK de firebase.
+
+            Copiamos el SDK generado por firebase, y lo pegamos en el config,js
+
+        7º Realiozamso algunos cambios
+
+            import {getFirestore }               // para obtener uyna instancia de firestore
+
+
+            ....
+
+            ...
+
+            ..
+
+
+            export const db = getFirestore(app)     // cambio manual que hacemos
+
+
+
+
+        8º Creamos BD de firestore  ( configuracion intuitiva )
+
+
+
+Firebase es una DB NoSQL, por lo tanto trabajams con colecciones y documentos.
+
+-------------------------------------------------------------------------------------------------------------------
+
+    getDocs: me permite obtener todos los docs de una collection
+    collection:; me permite obtener una coleccion
+    query: me permite hacer una consulta
+
+1º En el useEffect al momento de montar el componente, obtenemos la coleccion con la consulta query
+2ºLuego obtenemos los docs de la clecion con getDocs
+3º Resolucion de promesa
+
+COMO CONSUMIR DATOS DESDE NUESTRA BD
+
+    import { db } .... config.js            //traemos la instacia del firesctore
+
+    import {getDocs, collection, query, doc, updateDoc } ...        //traemos las herramientas de consulta de direbase
+
+
+     const Products = () => {
+
+        const [products, setProducts] = useState([])
+
+        useEffect(() => {
+
+            const data = query(collection( db, 'NombreDeColeccion'))        //obtenemos la col.
+
+            getDocs(data)           //conseguimos los docs
+
+
+                .then(response => {
+                    setProducts(response.docs.map(doc=> ({id: doc.id, ...doc.data()})))
+
+                    //Creo un array que contenga los productso y ademas un id
+                })
+
+
+        },[])
+
+
+
+        return(
+
+            ...
+            ...
+                <ul>
+                    {products.map( prod => (
+                        
+                        <li key={prod.id} >  .... </li>
+
+                    ))}
+                </ul>
+
+        )
+
+     }
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+Experimentando: como modificar producto indivuduales
+
+
+    ...
+    ....
+    ....
+    ....
+    ...
+
+    const descontarStock = async (prod ) => {
+        const prodRef = doc(db, "productos", prod.id)
+
+        let nuevoStock = prodRef.stock - 1
+
+        await updateDoc(prodRef, {stock: nuevoStock})
+
+
+    //actualizamos la lista en el DOM para no realizar nuevamente una consulta
+        const prodsActualizados = products.map ( p => {
+            if(p.id === prod.id){
+                return {...p, stock: nuevoStock}
+            }
+
+            return p
+        })
+        
+        setProducts(prodsActualizados)
+    }
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+APLICAR FILTROS:
+
+    // se hace con la herramienta "where"
+
+
+    const misProds = query(collection(db, "productos"), where("precio", "<", 400 ))
+
+-------------------------------------------------------------------------------------------------------------------
+
+SUBIR DOCS
+
+    ...
+    { addDoc}    // herramienta para subir el doc
+
+
+        //creamos los estados y el formulario para recopilar los datos necesarios
+
+        ej. 
+
+            <form onSubmit={handleForm}>
+
+                <label htmlFor=""  >  Nombre: </label>
+                <input  value={keyParaOBJ}   escuchadordeEvento  /> 
+            </form>
+
+
+    //FUncion manejadora de form
+
+    const handleForm = (e) => {
+        e.preventDefault()
+
+        addDoc(collection(db, "usuario"), {
+            nombre: nombre,
+            ..
+            ..
+        })
+
+        setNombre("")   //limpiamos los estados
+    }
+
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+
+CLASE 15 firebase 2
+
+    DELETEDOC
+        elimina el documento indicado al momento de la consulta
+            ej  
+
+                useEffect(() => {
+                    const libros = onSnapshot(collection(db,"Libros"), (sanpshot) => {
+                        setLibros(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
+                    })
+
+                    return() => libros()
+                })
+
+
+
+                const eliminarDoc = async ( id )=> {
+                    await deleteDoc(db,"libro", id)
+                }
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+    Trabajando con ONSNAPSHOT
+
+        SnapShot Al igual que getDocs, recpera datos desde firebase, pero onSnapshot, tiene la propuedad de mantenerse en escucha activa 
+
+
+        entonces ante caulquier cambio, te notifica y actua.
+
+        por eso generalemtne es usado en chats en timepos real y demas
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+    EJ de CHAT con REACT
+
+        const Chat = ( ) => {
+            const [mensajes, setMensajes] = useState([])
+            cont [nuevoMensaje, setNuevoMensaje] ...("")
+            .... [nombre, setNombre] ...("")
+            .....[ usuarioValido ...] .... ([false])
+        
+
+            const manejarNombre = (e) => {
+                setNombre(e.target.value)
+            }
+
+
+            const ingresarCjat = (e) => {
+                e.preventDefault()
+                if(nombre.trim()){
+                    setUsuarioValido(true)
+                }
+            }
+
+
+            useEffect( ()=>{
+                    const escuchador =  onSnapshot(collection(db,"mensajes"), (snapshot) => {
+                        const datosMensajes = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
+                    
+                        const mensajeOrdenbados = datosMensajes.sort((a,b) => a.timestamp - b.timestamp)
+                        setMensajes(mensajeOrdenbados)
+                    })
+                    return ( ) => escuchador()
+                }
+
+            },[])
+
+
+            const enviarMensaje = (e) => {
+                                e.preventDefault()
+
+                if(nuevoMensaje.trim()) {
+                    await addDoc(collection(db, "mensajes"),{
+                        text: nuevoMensaje,
+                        usuario: nombre,
+                        timestamp: new Data()
+                    })
+
+                    setNuevoMensaje("")
+            }
+
+        
+            return(
+
+                {
+                    
+                    !usuarioValido ? (
+
+                        <form onSubmit={ingresarCjat}>
+                            <input onChange = {manejarNombre}>
+                            <buttton type="bumit" > ENVIAR </buttton>
+                        </form>
+                    ) : (
+
+                        {
+                            mensajes.map(mensaje => (
+                                <div key={mensaje.id}>
+                                
+                                    {mensaje.usuario} dice: {menasje.text}
+
+                                 </div>
+                            ))
+                        }
+
+
+                        <form onSubmit={enviarMensaje}>
+
+                            <input
+
+                                type="text"
+                                value={nuevoMensaje}
+                                onChange={(e) => setNuevoMensaje(e-taget.cvalue)}
+                                required
+                            
+                            />
+                            button submit
+                        </form>
+
+                    )
+                }
+
+            )
+
+        }
+
+

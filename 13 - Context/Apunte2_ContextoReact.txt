@@ -1,0 +1,97 @@
+✅ APUNTE 2 – CONTEXTO EN REACT (versión criolla)
+
+📌 ¿Qué es el Contexto?
+
+El contexto en React es como un estado global que te deja guardar datos y funciones 
+para que estén disponibles en cualquier parte del proyecto, sin tener que andar pasando 
+props de componente en componente (el famoso "pasamanos").
+
+🧠 ¿Cuándo se usa?
+
+Cuando tenés datos que necesitás en muchos lados (por ejemplo: usuario logueado, carrito, darkmode, idioma, etc). 
+En vez de pasarlos por props desde arriba, los ponés en un context.
+
+⚙️ ¿Cómo funciona?
+
+Un contexto tiene 3 partes clave:
+1. createContext() → crea el "canal" donde van a viajar los datos.
+2. Provider → es el que tira los datos al canal (tiene los estados y funciones).
+3. useContext() → es el que recibe los datos del canal (los consume).
+
+✍️ PASO A PASO PARA USAR CONTEXT
+
+1️⃣ Crear el contexto
+
+// context/CarritoContext.js
+import { createContext } from "react"
+export const CarritoContext = createContext(null)  //creamos el canal
+
+2️⃣ Crear el Provider (donde irá toda la lógica)
+
+// context/CarritoContext.js
+import { useState } from "react"
+
+export const CarritoProvider = ({ children }) => {
+  const [carrito, setCarrito] = useState([])
+  const [total, setTotal] = useState(0)
+
+  const agregarAlCarrito = (item) => {
+    // lógica de agregar
+  }
+
+  return (
+    <CarritoContext.Provider value={{ carrito, total, agregarAlCarrito }}>
+      {children}
+    </CarritoContext.Provider>
+  )
+}
+
+📌 ¿Qué es {children}?
+Es todo el contenido que está dentro del <CarritoProvider> cuando lo usamos. 
+Sirve para que la app siga funcionando normalmente y no tape nada. 
+Ejemplo:
+
+<CarritoProvider>
+  <App />
+</CarritoProvider>
+
+En ese caso, children sería <App />, y lo estamos incluyendo dentro del Provider 
+para que reciba los datos.
+
+3️⃣ Envolver la app con el Provider
+
+// main.jsx o App.jsx
+import { CarritoProvider } from './context/CarritoContext'
+
+<React.StrictMode>
+  <CarritoProvider>
+    <App />
+  </CarritoProvider>
+</React.StrictMode>
+
+🔥 Así cualquier componente dentro de <App /> va a tener acceso al contexto.
+
+4️⃣ Usar el contexto (Consumidor)
+
+// Ejemplo en cualquier componente
+import { useContext } from "react"
+import { CarritoContext } from "../context/CarritoContext"
+
+const Componente = () => {
+  const { carrito, agregarAlCarrito } = useContext(CarritoContext)
+
+  return (
+    <div>
+      <button onClick={() => agregarAlCarrito(unProducto)}>Agregar</button>
+    </div>
+  )
+}
+
+🧠 ACLARACIONES
+
+- createContext() no tiene lógica, solo define qué forma tiene tu contexto.
+- El que tiene la lógica y estados reales es el Provider.
+- useContext() solo funciona si el componente está DENTRO del Provider, si no, devuelve undefined o el valor por defecto.
+
+🔌 Pensalo como una radio: createContext() crea la frecuencia, el Provider es quien transmite, 
+y useContext() es una radio que escucha.

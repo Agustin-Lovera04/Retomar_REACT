@@ -1,0 +1,148 @@
+✅ APUNTE 1 – CONTEXTO DE CARRITO (EJEMPLO PRÁCTICO COMPLETO)
+
+🎯 ¿Qué vamos a hacer?
+
+Un contexto que maneje:
+- carrito → array de productos
+- total → suma de precios
+- cantidadTotal → cantidad de unidades
+- Funciones para agregar, eliminar y vaciar el carrito
+
+📁 Archivo: CarritoContext.js
+
+import { useState, createContext } from "react"
+
+export const CarritoContext = createContext({
+  carrito: [],
+  total: 0,
+  cantidadTotal: 0,
+  agregarAlCarrito: () => {},
+  eliminarProducto: () => {},
+  vaciarCarrito: () => {}
+})
+
+export const CarritoProvider = ({ children }) => {
+  const [carrito, setCarrito] = useState([])
+  const [total, setTotal] = useState(0)
+  const [cantidadTotal, setCantidadTotal] = useState(0)
+
+  
+    const agregaACarrito = (item, cantidad) => {
+
+        const existProduct  = carrito.find ( prod => prod.item.id === item.id)  //corroboramos que no existeel prod
+
+
+        if(!existProduct){
+
+            setCart(prev => [...prev , {item, quantity}]) 
+                    //[...prev] (todos los datos previos) , sumale el nuevo obj {item, quanityt}
+
+
+            setCantidadTotal(prev => prev + quantity)   //sumamos a la cantidad con el nuevoProd
+
+
+            setTotal(prev => prev + (item.price * quanity))   //sumamos al total el subotal del new Item
+        }
+
+
+        else {
+
+
+            const carritoActualizado = cart.map(prod => {
+                    if(prod.item.id == item.id) {
+
+                        return {...prod, quanity: prod.quanity + quanitty}
+
+                    }else{
+                        return prod
+                    }
+            })
+
+
+            setCarrito(carritoActualizado)          //setemaos en nuevo carrito con el uevo prod
+
+            setQuanittyTotal( prev => prev + quanitty)       
+
+                                                                    //hacemos la misma logica de actulizacion
+            setTotal ( prev => prev + (item.price * quanitty))
+
+
+        }
+
+
+  const eliminarProducto = (id) => {
+    const productoAEliminar = carrito.find(prod => prod.item.id === id)
+    const carritoActualizado = carrito.filter(prod => prod.item.id !== id)
+
+    setCarrito(carritoActualizado)
+    setCantidadTotal(prev => prev - productoAEliminar.cantidad)
+    setTotal(prev => prev - productoAEliminar.item.precio * productoAEliminar.cantidad)
+  }
+
+  const vaciarCarrito = () => {
+    setCarrito([])
+    setCantidadTotal(0)
+    setTotal(0)
+  }
+
+  return (
+    <CarritoContext.Provider value={{
+      carrito,
+      total,
+      cantidadTotal,
+      agregarAlCarrito,
+      eliminarProducto,
+      vaciarCarrito
+    }}>
+      {children}
+    </CarritoContext.Provider>
+  )
+}
+
+📁 Envolver la app con el Provider
+
+// main.jsx o App.jsx
+import { CarritoProvider } from "./context/CarritoContext"
+
+<React.StrictMode>
+  <CarritoProvider>
+    <App />
+  </CarritoProvider>
+</React.StrictMode>
+
+📁 Cómo consumir el contexto
+
+// En cualquier componente (por ejemplo CartWidget.jsx)
+import { useContext } from "react"
+import { CarritoContext } from "../context/CarritoContext"
+
+const CartWidget = () => {
+  const { cantidadTotal } = useContext(CarritoContext)
+
+  return (
+    <div>
+      🛒 {cantidadTotal}
+    </div>
+  )
+}
+
+📁 Extra: Agregar un producto
+
+const Producto = ({ item }) => {
+  const { agregarAlCarrito } = useContext(CarritoContext)
+
+  return (
+    <button onClick={() => agregarAlCarrito(item, 1)}>Agregar al carrito</button>
+  )
+}
+
+📌 ¿Por qué definimos funciones vacías en createContext?
+
+Para que si llegás a usar el contexto fuera del Provider, no te tire error por estar accediendo a undefined.
+Con eso prevenís que explote el código mientras desarrollás, aunque igual siempre se debe usar dentro del Provider.
+
+🔚 Y con eso, tenés TODO el flujo listo:
+- Crear el contexto
+- Armar el provider con toda la lógica
+- Envolver la App
+- Usar el contexto en cualquier componente sin pasar props

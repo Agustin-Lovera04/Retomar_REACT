@@ -1,0 +1,96 @@
+En esta clase vamos a realizar optimizaciones de codigo
+
+
+    ·Ayuda a la escalabilidad y consistencia
+    ·Mejora legibilidad
+    ·generan code-bases mas compactas
+    ·reducetrabajos inesesarios de computo
+
+
+    PRINCIPIOS DE OPIMIZACION
+        · KISS: mantenete simple ( Keep it simple, stupid!)
+        · DRY: no te repitas (You aren't gonna need it)
+        · YAGNI: No lo necesitaras ( don't repeat yourself)
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+DOCUMENTAR NUESTRO PROYECTO
+
+    Generalmente vamos a usar "MARKDOWN" es una sintaxis abierta, comoda y suficiente para lograrlo.
+    Se incluye en un archivo readme.md en la carpeta principal del proyexto
+
+
+    ·Ayudan a establecer convenciones patrones y reglas de colaboracion
+    · Permiten a los colaboradores entender algunos objetivos centrales de las motiviaciones del PROYECTO
+    ·Proporcionan recursos minimos suficientes para levantar el proyecyo sin necesidad de doc extra
+    ·Si son librerias reportan la LTS
+
+
+
+ESTRUCTURA:
+
+    # Nombre del proyecto           //Con # se ponen titulos 
+
+    imagenes                        //Sinbtaxis particular pedir gpt
+
+    Descripcion es solo texto de la nada
+
+    ## Apartado 1                   // Doble ## es como un h2
+
+    ### seccion de apartado 1       //Sucesitvamente a los ###
+-------------------------------------------------------------------------------------------------------------------
+
+    VARIABLES DE entorno
+
+        npm i dotenv
+
+            creamos .env
+
+                API_KEY: nadjnasidfuinafaomfakf
+
+
+        
+        Luego en la configuracion de Firebase
+
+            ..
+            ...
+            apiKey: import.meta.env.API_KEY
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+Finalizando Codigo.
+
+COMO EJECUTAR VARIAS PROMESAS A LA VEZ???? 
+
+    Ej con actualizacion de stock y generacion de orden de compra
+
+
+    Promise.all(
+        orden.items.map(prodOrden)=> {
+            const prodRef = doc(db, "invenario", prodOrden.id)
+            const prodDoc = await getDoc(prodRef)               //Con lareferencia obtengo el doc
+            const stockActual =  prodDoc.data().stock       //data() me trae los datos del doc
+
+
+            //Agregar validacion de que no se pida mas stock del disponible
+
+
+    //Se modifica el stock y se sube la actualizacion
+            await updateDoc(prodRef, {
+                stock: stockActual - prodOrden.cantidad
+            })
+        }
+        .then(()=> {
+            addDoc(collection(db,"ordenes"), orden)          //segunda promesa se ejecuta si es exitosa la 1er Prom
+                .then(docRef => {
+                    setOrderId(docRef.id)
+                    vaciarCarrito()
+                })
+        })
+        
+           )

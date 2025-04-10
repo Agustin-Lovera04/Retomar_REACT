@@ -60,9 +60,25 @@ TOTAL DEL DIA 3.30 de back + 40 min de react === 4.10hs  MUY BUENO FELICITACIONE
     TOTAL 2.50
 
 26/3
-    19.40 hs - 
+    19.40 hs - 20.45 
+
+    parcial: 1.hs BIEN; PORUE TODO ESTO ESTA DE REGALO!!!
 
 
-SEGUIMOS CON CLASE 12
+
+
+
+
+ANOTACIONES FINAL DE CURSO:
+
+-Nos falta hacer la entrega final ( vamos a tratar de hacerla con el conocimineto que tenemos y suigiendo buenos patrones, recordar todo, buenas practicas, y control de errores.
+Tratemos de no volver a mirar las clases, que hace al final donde ayuda a realizar funcionalidades.)
+
+
+
+
+//Debemos entender mejor el snapShot
+
+al final de la clase 15 hace un gestor de libros, como actividad ( podemos usarlo para el portfolio, darle bola a estas actividades, para armar un buen portoflio, y demeos realizar nuevamente mi portfolio, ode minima hacer cambios mas originales )
 
 Clase 11 1.28hs ( EXPLICA UNA ACT DE CONTADOR; VER SI DP ME TRABO CON EL CONTADOR; PARA SABER HACERLO BIEN EN ENTREGABLE)

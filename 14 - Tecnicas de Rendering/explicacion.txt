@@ -1,0 +1,199 @@
+RENDER PROPS
+
+    Patron que nos permite comprartir la logica entre componentes.
+    Coonsiste en pasasr una funcionc omo prorp a un componente y ese componente urilizara esa funcion para renderizar datos.
+
+        const Count = () => {
+            
+            const [count, setCount] = useState(0)
+
+            const incCount = ({render}) => {        //Gralmente se invoca como render
+                setCount(count + 1)
+            }
+
+
+            return (
+                <div>
+
+                    <h1> Aqui usamos Render Props </h1>
+
+                    //llamamos al render props
+                    {render(count, incrementar)}
+
+                </div>
+            )
+        }
+
+
+
+        const App = ( ) => {
+
+            return ( 
+                <div>
+                
+                    <h1> Aca invvocamos al componente enviandole el render por prop</h1>
+
+
+                    <Count  render= {(count, inc) => {
+
+                        <div>
+                            <button onClick={inc}> Incrementar </button>
+
+                            <h2> Contador desde Render Prop: {count}  </h2>
+                        </div>
+
+
+                    }} />
+
+                </div>
+            )
+
+        }
+
+    
+DE ESTA MANERA FIJESE QUE DIVIDIOS Y MODULARIZAMOS LAS FUNCIONALIDADES DE UN SOLO COMPONENTE.
+
+La logica de render e interfaz esta del lado de donde se lo invoca al compoente.
+
+Y la logica de contador, del lado de donde se crea el componente
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+DIFERENCIA ENTRE RENDER PROPS Y HOC
+
+    Los dos son tecnicas avanadas en React que nos permiten reutilizar logica.
+
+    La principal dif, es que los render props  se basa en la idea de pasar una funcion de renderizado como prop, para renderizar justamente,.
+    
+    Mientras que los HOC son compo de orden supoerior que envuelven otro componente y le agregan funcionalidad
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+    
+
+RENDERING CONDICIONAL
+    En ciclos de render puedo decidir que quiero hacer rendering de solo algunos nodos de un arbol.
+
+
+    START RENDER ====> LOADING ? =====>  -TRUE ===> <h1> ESTO SE RENDERIZA SI ES TRUE </h1>
+                                 =====>  -FALSE ===> <h2>  ESTO SE MOSTRARA SI ES FALSE</h2>
+    
+    
+
+
+    {
+        cargando ? (            //Analizamos con condicional ( si cargando = true ) 
+            <Spinner />
+        )  : (                      // esto es Ternario ( se usa mucho en react)
+
+            <ul>
+                <li> PRODUCTS</li>
+            </ul>
+
+        )
+
+    }
+
+
+
+
+· Estos eventos provocan dismounting y todos los efectos que conllevan
+· se llamara efecto de desmontaje y podemos detectarlo
+· podemos usar los cleanup Effects para derectar algun dismuntin si no sabemos con certeza si ocuree
+· Aveces se pdorucen sin intencion y causan BUGS ( o perdidas de estado )
+
+
+    TECNICAS DE RNDERING
+
+
+        1) RETURN TEMPRANO: Esta tecnica la usamos en JS y evitamos usar el else, funcoion booleana que me dice si es true talcondicion
+
+
+        const ReturnTemprano = ({nombre}) => {
+            
+            if( nombre === "Samuel" ){ 
+                return <h1>  SE APLICA SI LA CONDICION ES TRUE  </h1>
+            }
+
+           return  <h1>  ESTO SOLO APARECE SI EL CONDICIONAL ES FALSE  </h1>
+        }
+
+
+
+
+        2) FRAGMENT: la usamos cuando deseamos renderizar un eleento condicional en funcion de una expresion booleana.
+
+                const FRAGMETN = ({booleano}) => {
+
+                    <>
+                        {booleano && <h1> Si es True </h1> }
+                        {!booleano && <h1> Si es False </h1>}
+                    </>
+
+                }
+
+
+
+        3) OPERADOR TERNARIO: Mantenemos el mismo nodo como padre y modificamos sus chilkdren que en esta csao son los textos, los cual optimiza porque no ejecutariamos ningun dismount
+
+
+
+            <div>
+                { booleano ? <h1> Se muestra si es TRUE </h1> 
+                
+                 :   
+
+                 <h1> Se muestra si es false </h1>
+                }
+            </div>  
+
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+
+STYLING: ESTILOS CONDICIONALES.
+
+
+        <div>
+        
+            <h1  style={{color: booleano ? "green" : "red"}}  >  ESTILO CONDICIONAL  </h1> // estilo en linea
+
+            <h1  className={{booleano ? "classNameGreen" : "classNameRed"}}  >  ESTILO CONDICIONAL  </h1> // estilo con className
+
+
+        </div>
+
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+
+RENDERIN OPTIMIZATION
+    En cada cambio, react hace rendering top-down, desde e llugar donde se produjo el cambio d eestado de manera recursiva.
+
+    Muchas veces sabemos que enrealidad nada deberia cambiar en algunos componentes ya montados
+
+    "recordemos que los sources de cambio son props, state y re.render del padre"
+
+
+
+ENTONCEs, podemos hacer que se evite este trabajo innesesario, pero debemos saber:
+
+    · El compoennte es PURO
+    · Certeza des que las mimsmas propr producen siempre el mimso render
+    · Sabemos que es muy caro de realizar, una lista larga, logicas ocmplejas etc
+
+
+
+PARA ESTO SE CREO LA TECNICA "MEMO"
+        Para lograrlo neceito envolver mi componente en un memo:
+
+        · Sirve par ahorrar renders costosos de los cuales podamos prevee el resultado en base al analisas de sus props.
+
+        · no es necesario ni recomendado usarlo en componentes que no se requiera
+        
+        ·Util en listas largas y determinadas que se tienen un rendering freceunte pero que no modifica sus props
+
+        
+
+            
